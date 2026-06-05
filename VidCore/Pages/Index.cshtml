@@ -1,0 +1,43 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "VidCore";
+}
+
+<div class="header">
+    <h1>VidCore</h1>
+
+    <p>Добро пожаловать на VidCore - ваш источник видео контента!</p>
+</div>
+
+<div class="video-grid">
+
+    @foreach(var video in Model.Videos)
+    {
+        <div class="video-card">
+
+            <a href="/VideoView?id=@video.Id"
+               class="video-link">
+
+                <img src="@video.ThumbnailPath"
+                     alt="@video.Title"
+                     class="video-thumbnail" />
+
+                <div class="video-info">
+
+                    <div class="video-title">
+                        @video.Title
+                    </div>
+
+                    <div class="video-meta">
+                        @video.Views views
+                    </div>
+
+                </div>
+
+            </a>
+
+        </div>
+    }
+
+</div>

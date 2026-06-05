@@ -1,0 +1,45 @@
+@page
+@model VideoViewModel
+@{
+    ViewData["Title"] = "Video View";
+}
+
+<h1>@Model.CurrentVideo.Title</h1>
+ 
+<p>@Model.CurrentVideo.Description</p>
+<a class="a">Просмотры: @Model.CurrentVideo.Views</a>
+<a class="a">Дата загрузки: @Model.CurrentVideo.UploadDate.ToString("dd MMMM yyyy")</a>
+<a class="a">Прошло времени: @Model.GetTimeSinceUpload()</a>
+
+<video id="player" controls>
+    <source src="@Model.CurrentVideo.VideoPath">
+</video>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const player = new Plyr('#player');
+});
+</script>
+
+
+<hr />
+
+<h2>Edit Video</h2>
+
+<form method="post">
+    <input type="hidden" name="id" value="@Model.CurrentVideo.Id" />
+
+    <button type="submit" asp-page-handler="Delete">
+        Удалить видео
+    </button>
+
+    <label for="Title">Видео Title:</label>
+    <input type="text" id="Title" name="Title" placeholder="Введите название видео">
+    
+    <label for="Description">Описание:</label>
+    <textarea id="Description" name="Description" rows="5" cols="40" placeholder="Напишите здесь ваше описание..."></textarea>
+
+    <button type="submit" asp-page-handler="Edit" class="btn btn-primary">
+        Редактировать видео
+    </button>
+</form>

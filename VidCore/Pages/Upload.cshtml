@@ -1,0 +1,27 @@
+@page
+@model UploadModel
+@{
+    ViewData["Title"] = "Upload Video";
+}
+<h1>@ViewData["Title"]</h1>
+
+<p>Use this page to upload videos.</p>
+
+<form method="post" enctype="multipart/form-data">
+
+    <label for="Title">Видео Title:</label>
+    <input type="text" id="Title" name="Title" placeholder="Введите название видео">
+    
+    <label for="Description">Описание:</label>
+    <textarea id="Description" name="Description" rows="5" cols="40" placeholder="Напишите здесь ваше описание..."></textarea>
+
+    <label for="ThumbnailFile">Загрузить фото:</label>
+    <input type="file" id="thumbnail-file" name="ThumbnailFile" accept="image/*">
+
+    <label for="VideoFile">Загрузить видео:</label>
+    <input type="file" id="VideoFile" name="VideoFile" accept="video/*">
+    <button type="submit" asp-page-handler="Upload" class="btn btn-primary">
+        Загрузить видео
+    </button>
+
+</form>
