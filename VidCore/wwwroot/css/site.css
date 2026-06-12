@@ -92,9 +92,17 @@ hr {
 .href {
   text-decoration: none;
   color: black;
+}
+
+.DeleteBtn {
+  color: red;
+  box-shadow: #121212, red;
+  outline: black;
+}
+
 
 .a {
-  color: #0066cc; 
+  color: #ffffff; 
   text-decoration: none; 
   font-weight: bold; 
   transition: color 0.3s ease; 
@@ -108,4 +116,3 @@ hr {
     border-radius: 12px;
 }
 
-}

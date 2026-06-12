@@ -1,0 +1,47 @@
+﻿@page
+@model MusicPageModel
+@{
+    ViewData["Title"] = "Music Page";
+}
+
+<div class="header">
+    <h1>VidCore</h1>
+
+    <p>Музыка по вашему вкусу :З!</p>
+
+</div>
+
+<hr />
+<h2 style="position:center">Music</h2>
+<div class="video-grid">
+
+    @foreach(var music in Model.Musics)
+    {
+        <div class="video-card"> </div>
+
+           <video id="player" controls>
+                <source src="@music.AudioPath">
+            </video>
+                
+                <div class="video-info">
+
+                    <div class="video-title">
+                        @music.Title
+                    </div>
+                    <div class="video-meta">
+                        @music.Description
+                        <a>♥️@music.Likes</a>
+                        <form method="post">
+                            <button type="submit" asp-page-handler="LikeMus" class="btn btn-primary">♥️</button>
+                        </form>
+
+                        
+                    </div>
+                  
+
+                </div>
+
+    }
+
+</div>
+

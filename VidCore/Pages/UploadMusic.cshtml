@@ -1,0 +1,24 @@
+@page
+@model UploadMusicModel
+@{
+    ViewData["Title"] = "Upload Music";
+}
+<h1>@ViewData["Title"]</h1>
+
+<p>Use this page to upload music.</p>
+
+<form method="post" enctype="multipart/form-data">
+
+    <label for="Title">Music Title:</label>
+    <input type="text" id="Title" name="Title" placeholder="Введите название музыки">
+    
+    <label for="Description">Описание:</label>
+    <textarea id="Description" name="Description" rows="5" cols="40" placeholder="Напишите здесь ваше описание..."></textarea>
+
+    <label for="AudioFile">Загрузить аудио:</label>
+    <input type="file" id="AudioFile" name="AudioFile" accept="audio/*">
+    <button type="submit" asp-page-handler="Upload" class="btn btn-primary">
+        Загрузить видео
+    </button>
+
+</form>

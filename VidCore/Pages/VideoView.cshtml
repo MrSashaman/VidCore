@@ -4,12 +4,15 @@
     ViewData["Title"] = "Video View";
 }
 
+
 <h1>@Model.CurrentVideo.Title</h1>
  
 <p>@Model.CurrentVideo.Description</p>
 <a class="a">Просмотры: @Model.CurrentVideo.Views</a>
+<a class="a">Лайки: @Model.CurrentVideo.Likes</a>
 <a class="a">Дата загрузки: @Model.CurrentVideo.UploadDate.ToString("dd MMMM yyyy")</a>
 <a class="a">Прошло времени: @Model.GetTimeSinceUpload()</a>
+
 
 <video id="player" controls>
     <source src="@Model.CurrentVideo.VideoPath">
@@ -23,13 +26,29 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 <hr />
+<h2>Комментарии</h2>
+
+
+
+
+<hr />
+
 
 <h2>Edit Video</h2>
 
 <form method="post">
+
+    <button type="submit" asp-page-handler="Like" class="btn btn-primary">
+       👍
+    </button>
+
+    <button type="submit" asp-page-handler="Comment" class="btn btn-primary">
+       Добавить Комментарий
+    </button>
+
     <input type="hidden" name="id" value="@Model.CurrentVideo.Id" />
 
-    <button type="submit" asp-page-handler="Delete">
+    <button class="DeleteBtn" type="submit" asp-page-handler="Delete">
         Удалить видео
     </button>
 
@@ -43,3 +62,9 @@ document.addEventListener("DOMContentLoaded", function() {
         Редактировать видео
     </button>
 </form>
+
+
+
+
+
+
