@@ -16,13 +16,15 @@ public class VideoViewModel : PageModel
     public int id {get; set; }
 
     [BindProperty]
+    public string CText { get; set; }
+
+    [BindProperty]
     public DateTime UploadDate { get; set; }
 
     [BindProperty]
     public string Author { get; set; }
 
-
-    public List<Comment> Comments { get; set; }
+    public List<Comment> Comments { get; set; } = new();
     public IActionResult OnGet(int id)
     {
         CurrentVideo = VideoStorage.Videos
@@ -33,31 +35,42 @@ public class VideoViewModel : PageModel
             return NotFound();
         }
 
-
-
-        
-        Comments = CommentStorage.Comments;
-
+        Comments = CommentStorage.Comments
+            .Where(c => c.VideoId == id)
+            .ToList();
         CurrentVideo.Views++;
+        Console.WriteLine(CommentStorage.Comments.Count);
+
         return Page();
     }
 
-       public async Task<IActionResult> OnPostCommentasync()
-    {
-        Console.WriteLine("Comment share start!");
-        int randomId = Random.Shared.Next(100000, 999999);
 
-        Comment comment = new Comment();
+
+
+    public IActionResult OnPostComment(int id)
+    {
+        if (string.IsNullOrWhiteSpace(CText))
         {
-            comment.id = randomId;
-            comment.Text = "hey, its so good you know!";
-            comment.Author = "RandomPeople" + Random.Shared.Next(0, 999999);
-            comment.UploadDate = DateTime.Now;
+            Console.WriteLine($"Comment text: {CText}");
+            return RedirectToPage("/VideoView", new { id });
+            
+        }
+
+        Comment comment = new Comment
+        {
+            id = Random.Shared.Next(100000, 999999),
+            Text = CText,
+            VideoId = id,
+            Author = "RandomPeople" + Random.Shared.Next(0, 999999),
+            UploadDate = DateTime.Now
         };
 
-        Comments.Add(comment);
-        return RedirectToPage("/Index");
+        Console.WriteLine($"Comment text: {CText}");
+        CommentStorage.Comments.Add(comment);
+
+        return RedirectToPage("/VideoView", new { id });
     }
+
     public string  GetTimeSinceUpload()
     {
         DateTime now = DateTime.Now;
@@ -73,18 +86,19 @@ public class VideoViewModel : PageModel
         return RedirectToPage("/Index");
     }
 
-    public IActionResult OnPostLike(int id, int Likes )
+    public IActionResult OnPostLike(int id)
     {
-        CurrentVideo = VideoStorage.Videos.FirstOrDefault(v => v.Id == id);
+        CurrentVideo = VideoStorage.Videos
+            .FirstOrDefault(v => v.Id == id);
 
         if (CurrentVideo == null)
         {
             return NotFound();
         }
 
-        CurrentVideo.Likes += 1;
+        CurrentVideo.Likes++;
 
-        return Page();
+        return RedirectToPage("/VideoView", new { id });
     }
 
 
@@ -127,7 +141,11 @@ public class VideoViewModel : PageModel
                 System.IO.File.Delete(fullVideoPath);
             }
 
-            if (System.IO.File.Exists(fullThumbnailPath))
+            if (fullThumbnailPath == "/spic/nullthumbail.png")
+            {
+                Console.WriteLine("All okay");
+            }
+            else
             {
                 System.IO.File.Delete(fullThumbnailPath);
             }

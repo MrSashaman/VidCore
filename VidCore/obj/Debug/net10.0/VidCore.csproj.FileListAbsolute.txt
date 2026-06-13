@@ -196,4 +196,4 @@ C:/Users/Alexsandr Pimonov/Desktop/VSTC_Projects/VidCore/VidCore/obj/Debug/net10
 /home/mrsashaman/VidCore/VidCore/obj/Debug/net10.0/ref/VidCore.dll
 /home/mrsashaman/VidCore/VidCore/obj/Debug/net10.0/compressed/ocuz9haaeg-{0}-icsm4jtl8e-icsm4jtl8e.gz
 /home/mrsashaman/VidCore/VidCore/obj/Debug/net10.0/compressed/4n315mqxvp-{0}-icsm4jtl8e-icsm4jtl8e.gz
-/home/mrsashaman/VidCore/VidCore/obj/Debug/net10.0/compressed/mvi0v19h7l-{0}-c2exb77g4e-c2exb77g4e.gz
+/home/mrsashaman/VidCore/VidCore/obj/Debug/net10.0/compressed/mvi0v19h7l-{0}-douy6rqy7w-douy6rqy7w.gz

@@ -8,11 +8,12 @@
 <h1>@Model.CurrentVideo.Title</h1>
  
 <p>@Model.CurrentVideo.Description</p>
-<a class="a">Просмотры: @Model.CurrentVideo.Views</a>
-<a class="a">Лайки: @Model.CurrentVideo.Likes</a>
-<a class="a">Дата загрузки: @Model.CurrentVideo.UploadDate.ToString("dd MMMM yyyy")</a>
-<a class="a">Прошло времени: @Model.GetTimeSinceUpload()</a>
-
+<div class="video-stats">
+    <span>👁 @Model.CurrentVideo.Views</span>
+    <span>👍 @Model.CurrentVideo.Likes</span>
+    <span>@Model.GetTimeSinceUpload()</span>
+</div>
+<input type="hidden" name="id" value="@Model.CurrentVideo.Id" />
 
 <video id="player" controls>
     <source src="@Model.CurrentVideo.VideoPath">
@@ -28,7 +29,14 @@ document.addEventListener("DOMContentLoaded", function() {
 <hr />
 <h2>Комментарии</h2>
 
-
+@foreach(var comment in Model.Comments)
+{
+    <div class="comment-card">
+        <strong>@comment.Author</strong>
+        <span>@comment.UploadDate.ToString("dd.MM.yyyy HH:mm")</span>
+        <p>@comment.Text</p>
+    </div>
+}в
 
 
 <hr />
@@ -42,6 +50,14 @@ document.addEventListener("DOMContentLoaded", function() {
        👍
     </button>
 
+    <div>
+        <h3>Комментарий</h3>
+        <textarea asp-for="CText"
+          rows="4"
+          cols="50"
+          placeholder="Напишите комментарий...">
+        </textarea>
+    </div>
     <button type="submit" asp-page-handler="Comment" class="btn btn-primary">
        Добавить Комментарий
     </button>
