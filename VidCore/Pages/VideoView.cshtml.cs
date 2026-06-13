@@ -31,7 +31,7 @@ public class VideoViewModel : PageModel
 
         if (CurrentVideo == null)
         {
-            return NotFound();
+            return RedirectToPage("/Error404");
         }
 
         Comments = CommentStorage.Comments

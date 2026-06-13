@@ -24,6 +24,7 @@ app.UseHttpsRedirection();
 app.UseRouting();
 
 app.UseAuthorization();
+app.UseStatusCodePagesWithReExecute("/Error404");
 
 app.MapStaticAssets();
 app.MapRazorPages()

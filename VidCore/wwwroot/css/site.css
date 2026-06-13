@@ -209,3 +209,136 @@ textarea:focus {
     color: #ddd;
     line-height: 1.5;
 }
+
+
+.privacy-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-radius: 16px;
+}
+
+.privacy-container h1 {
+    margin-bottom: 20px;
+}
+
+.privacy-container h2 {
+    margin-top: 30px;
+    color: #ffffff;
+}
+
+.privacy-container p,
+.privacy-container li {
+    color: #d0d0d0;
+    line-height: 1.7;
+}
+
+.privacy-container ul {
+    padding-left: 20px;
+}
+
+
+
+.rules-container {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 30px;
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-radius: 16px;
+}
+
+.rules-container h1 {
+    margin-bottom: 20px;
+}
+
+.rules-container h2 {
+    margin-top: 35px;
+    margin-bottom: 10px;
+    color: #ffffff;
+}
+
+.rules-container h3 {
+    margin-top: 20px;
+    color: #dddddd;
+}
+
+.rules-container p,
+.rules-container li {
+    color: #d0d0d0;
+    line-height: 1.8;
+}
+
+.rules-container ul {
+    padding-left: 25px;
+}
+
+.rules-container hr {
+    margin-top: 30px;
+}
+
+
+.about-container {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 30px;
+
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-radius: 16px;
+}
+
+.about-container h1 {
+    text-align: center;
+}
+
+.about-subtitle {
+    text-align: center;
+    color: #888;
+    font-size: 18px;
+}
+
+.about-container h2 {
+    margin-top: 35px;
+}
+
+.about-container p,
+.about-container li {
+    line-height: 1.8;
+    color: #d0d0d0;
+}
+
+.developer-card {
+    margin-top: 40px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 25px;
+
+    background: #222;
+    border-radius: 16px;
+}
+
+.developer-avatar {
+    width: 150px;
+    height: 150px;
+
+    border-radius: 50%;
+    object-fit: cover;
+
+    border: 3px solid #444;
+}
+
+.developer-card h3 {
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+.developer-role {
+    color: #888;
+    font-size: 14px;
+}
