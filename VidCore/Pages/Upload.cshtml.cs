@@ -94,7 +94,6 @@ public async Task<IActionResult> OnPostUploadAsync()
 
     Video video = new Video
     {
-        Id = VideoStorage.Videos.Count + 1,
         Title = Title,
         Description = Description,
         UploadDate = DateTime.Now,
@@ -104,9 +103,7 @@ public async Task<IActionResult> OnPostUploadAsync()
             : "/spic/nullthumbail.png"
     };
 
-    VideoStorage.Videos.Add(video);
-
-    Console.WriteLine(VideoStorage.Videos.Count);
+    Database.AddVideo(video);
 
     return RedirectToPage("/Index");
 }

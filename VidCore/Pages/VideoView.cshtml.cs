@@ -27,8 +27,7 @@ public class VideoViewModel : PageModel
     public List<Comment> Comments { get; set; } = new();
     public IActionResult OnGet(int id)
     {
-        CurrentVideo = VideoStorage.Videos
-            .FirstOrDefault(v => v.Id == id);
+        CurrentVideo = Database.GetVideoById(id);
 
         if (CurrentVideo == null)
         {
@@ -38,7 +37,7 @@ public class VideoViewModel : PageModel
         Comments = CommentStorage.Comments
             .Where(c => c.VideoId == id)
             .ToList();
-        CurrentVideo.Views++;
+        Database.AddView(id);
         Console.WriteLine(CommentStorage.Comments.Count);
 
         return Page();
@@ -71,11 +70,29 @@ public class VideoViewModel : PageModel
         return RedirectToPage("/VideoView", new { id });
     }
 
-    public string  GetTimeSinceUpload()
+    public string GetTimeSinceUpload()
     {
-        DateTime now = DateTime.Now;
-        TimeSpan difference = now - CurrentVideo.UploadDate;
-        return difference.TotalMinutes.ToString("F1") + " minutes ago";  
+        TimeSpan diff = DateTime.Now - CurrentVideo.UploadDate;
+
+        if (diff.TotalSeconds < 10)
+            return "только что";
+
+        if (diff.TotalMinutes < 1)
+            return $"{(int)diff.TotalSeconds} сек. назад";
+
+        if (diff.TotalHours < 1)
+            return $"{(int)diff.TotalMinutes} мин. назад";
+
+        if (diff.TotalDays < 1)
+            return $"{(int)diff.TotalHours} ч. назад";
+
+        if (diff.TotalDays < 30)
+            return $"{(int)diff.TotalDays} дн. назад";
+
+        if (diff.TotalDays < 365)
+            return $"{(int)(diff.TotalDays / 30)} мес. назад";
+
+        return $"{(int)(diff.TotalDays / 365)} г. назад";
     }
 
     
@@ -88,27 +105,24 @@ public class VideoViewModel : PageModel
 
     public IActionResult OnPostLike(int id)
     {
-        CurrentVideo = VideoStorage.Videos
-            .FirstOrDefault(v => v.Id == id);
+        CurrentVideo = Database.GetVideoById(id);
 
         if (CurrentVideo == null)
         {
             return NotFound();
         }
 
-        CurrentVideo.Likes++;
-
+        Database.AddLike(id);
         return RedirectToPage("/VideoView", new { id });
     }
 
 
     public IActionResult OnPostEdit(int id, string title, string description)
     {
-        var video = VideoStorage.Videos.FirstOrDefault(v => v.Id == id);
+        var video = Database.GetVideoById(id);
         if (video != null)
         {
-            video.Title = title;
-            video.Description = description;
+            Database.UpdateVideo(id, title, description);
         }
 
         return RedirectToPage("/Index");
@@ -117,7 +131,7 @@ public class VideoViewModel : PageModel
     private void RemoveVideo(int id, string videoPath, string thumbnailPath)
     {
 
-        var video = VideoStorage.Videos.FirstOrDefault(v => v.Id == id);
+        var video = Database.GetVideoById(id);
         if (video != null)
         { 
 
@@ -141,16 +155,22 @@ public class VideoViewModel : PageModel
                 System.IO.File.Delete(fullVideoPath);
             }
 
-            if (fullThumbnailPath == "/spic/nullthumbail.png")
-            {
-                Console.WriteLine("All okay");
-            }
-            else
+            bool isDefaultThumbnail =
+                video.ThumbnailPath.Contains("nullthumbail.png");
+
+            if (!isDefaultThumbnail)
+{
+            if (System.IO.File.Exists(fullThumbnailPath))
             {
                 System.IO.File.Delete(fullThumbnailPath);
             }
+            }
+             else
+             {
+                 Console.WriteLine("Default thumbnail, skip delete");
+             }   
 
-            VideoStorage.Videos.Remove(video);
-        }
+            Database.DeleteVideo(id);
     }
+}
 }

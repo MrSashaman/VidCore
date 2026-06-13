@@ -1,8 +1,15 @@
+using VidCore;
+
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
+
+Database.Initialize();
+
 app.UseStaticFiles();
 
 if (!app.Environment.IsDevelopment())

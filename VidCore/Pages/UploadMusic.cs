@@ -60,7 +60,7 @@ public class UploadMusicModel : PageModel
 
         Music music = new Music();
         {
-            music.Id = VideoStorage.Videos.Count + 1;
+            music.Id = MusicStorage.Musics.Count + 1;
             music.Title = Title;
             music.Description = Description;
             music.UploadDate = DateTime.Now;
