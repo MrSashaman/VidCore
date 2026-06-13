@@ -9,6 +9,7 @@ builder.Services.AddRazorPages();
 var app = builder.Build();
 
 Database.Initialize();
+CommentDatabase.Initialize();
 
 app.UseStaticFiles();
 

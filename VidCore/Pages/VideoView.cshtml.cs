@@ -34,11 +34,8 @@ public class VideoViewModel : PageModel
             return RedirectToPage("/Error404");
         }
 
-        Comments = CommentStorage.Comments
-            .Where(c => c.VideoId == id)
-            .ToList();
+        Comments = CommentDatabase.GetCommentsByVideoId(id);
         Database.AddView(id);
-        Console.WriteLine(CommentStorage.Comments.Count);
 
         return Page();
     }
@@ -50,22 +47,18 @@ public class VideoViewModel : PageModel
     {
         if (string.IsNullOrWhiteSpace(CText))
         {
-            Console.WriteLine($"Comment text: {CText}");
             return RedirectToPage("/VideoView", new { id });
-            
         }
 
-        Comment comment = new Comment
+        var comment = new Comment
         {
-            id = Random.Shared.Next(100000, 999999),
             Text = CText,
             VideoId = id,
             Author = "RandomPeople" + Random.Shared.Next(0, 999999),
             UploadDate = DateTime.Now
         };
 
-        Console.WriteLine($"Comment text: {CText}");
-        CommentStorage.Comments.Add(comment);
+        CommentDatabase.AddComment(comment);
 
         return RedirectToPage("/VideoView", new { id });
     }
@@ -159,18 +152,19 @@ public class VideoViewModel : PageModel
                 video.ThumbnailPath.Contains("nullthumbail.png");
 
             if (!isDefaultThumbnail)
-{
-            if (System.IO.File.Exists(fullThumbnailPath))
             {
-                System.IO.File.Delete(fullThumbnailPath);
+                if (System.IO.File.Exists(fullThumbnailPath))
+                {
+                    System.IO.File.Delete(fullThumbnailPath);
+                }
             }
+            else
+            {
+                Console.WriteLine("Default thumbnail, skip delete");
             }
-             else
-             {
-                 Console.WriteLine("Default thumbnail, skip delete");
-             }   
 
+            CommentDatabase.DeleteCommentsByVideoId(id);
             Database.DeleteVideo(id);
+        }
     }
-}
 }
