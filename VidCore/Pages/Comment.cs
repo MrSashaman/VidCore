@@ -10,5 +10,6 @@ namespace VidCore
         public DateTime UploadDate { get; set; }
         public int VideoId { get; set; }
         public string Author { get; set; }
+        public bool IsPrivate { get; set; }
     }
 }

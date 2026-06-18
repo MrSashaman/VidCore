@@ -20,6 +20,13 @@
 
     <label for="VideoFile">Загрузить видео:</label>
     <input type="file" id="VideoFile" name="VideoFile" accept="video/*">
+
+    <div>
+        <label>
+            <input type="checkbox" name="IsPrivate" /> Приватное видео
+        </label>
+    </div>
+
     <button type="submit" asp-page-handler="Upload" class="btn btn-primary">
         Загрузить видео
     </button>

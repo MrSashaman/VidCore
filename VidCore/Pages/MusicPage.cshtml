@@ -17,7 +17,13 @@
                 </audio>
 
                 <div class="music-info">
-                    <div class="music-title">@music.Title</div>
+                    <div class="music-title">
+                        @music.Title
+                        @if (music.IsPrivate)
+                        {
+                            <span class="badge bg-warning">Приватно</span>
+                        }
+                    </div>
                     <div class="music-artist">@music.Artist</div>
 
                     <div class="music-stats">
@@ -26,9 +32,12 @@
                             <button type="submit" asp-page-handler="Like" asp-route-id="@music.Id" class="music-like-btn" title="Лайк">
                                 👍
                             </button>
-                            <button type="submit" asp-page-handler="Delete" asp-route-id="@music.Id" class="music-delete-btn" title="Удалить">
-                                🗑️
-                            </button>
+                            @if (User.Identity?.Name == music.Owner)
+                            {
+                                <button type="submit" asp-page-handler="Delete" asp-route-id="@music.Id" class="music-delete-btn" title="Удалить">
+                                    🗑️
+                                </button>
+                            }
                         </form>
                     </div>
                 </div>

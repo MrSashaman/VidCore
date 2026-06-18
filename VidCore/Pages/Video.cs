@@ -8,6 +8,8 @@ namespace VidCore
         public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
+        public string Owner { get; set; }
+        public bool IsPrivate { get; set; }
         public int Views { get; set; }
         public int Likes { get; set; }
         public DateTime UploadDate { get; set; }

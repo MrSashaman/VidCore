@@ -107,8 +107,8 @@ public static class MusicRecommendationEngine
     public static List<Music> GetMonthlyHits(string? genre = null)
     {
         var thirtyDaysAgo = DateTime.Now.AddDays(-30);
-        var allMusic = string.IsNullOrEmpty(genre) 
-            ? MusicDatabase.GetAllMusic() 
+        var allMusic = string.IsNullOrEmpty(genre)
+            ? MusicDatabase.GetAccessibleMusic(null)
             : MusicDatabase.GetMusicByGenre(genre);
 
         return allMusic

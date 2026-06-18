@@ -9,7 +9,7 @@ public class MusicPageModel : PageModel
 
     public void OnGet()
     {
-        Musics = MusicDatabase.GetAllMusic();
+        Musics = MusicDatabase.GetAccessibleMusic(User.Identity?.Name);
     }
 
     public IActionResult OnPostLike(int id)
@@ -22,8 +22,16 @@ public class MusicPageModel : PageModel
 
     public IActionResult OnPostDelete(int id)
     {
-        MusicDatabase.DeleteMusic(id);
-        Console.WriteLine($"✓ Музыка с ID {id} удалена");
+        if (string.IsNullOrWhiteSpace(User.Identity?.Name))
+        {
+            return Challenge();
+        }
+
+        if (MusicDatabase.DeleteMusic(id, User.Identity.Name))
+        {
+            Console.WriteLine($"✓ Музыка с ID {id} удалена");
+        }
+
         return RedirectToPage();
     }
 }

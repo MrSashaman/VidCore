@@ -1,9 +1,11 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Http;
 
 namespace VidCore.Pages;
 
+[Authorize]
 public class UploadMusicModel : PageModel
 {
     [BindProperty]
@@ -20,6 +22,9 @@ public class UploadMusicModel : PageModel
 
     [BindProperty]
     public string Genre { get; set; }
+
+    [BindProperty]
+    public bool IsPrivate { get; set; }
 
     public void OnGet()
     {
@@ -79,9 +84,11 @@ public class UploadMusicModel : PageModel
             var music = new Music
             {
                 Title = Title.Trim(),
-                Description = Description?.Trim() ?? "",
+                Description = Description?.Trim() ?? string.Empty,
                 Artist = string.IsNullOrWhiteSpace(Artist) ? "Unknown Artist" : Artist.Trim(),
                 Genre = string.IsNullOrWhiteSpace(Genre) ? "Other" : Genre.Trim(),
+                Owner = User.Identity?.Name ?? string.Empty,
+                IsPrivate = IsPrivate,
                 AudioPath = $"/musics/{audioFileName}",
                 DurationSeconds = durationSeconds,
                 UploadDate = DateTime.Now,

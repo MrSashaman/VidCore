@@ -13,7 +13,7 @@ public class IndexModel : PageModel
     
     public void OnGet()
     {
-        Videos = Database.GetVideos();
+        Videos = Database.GetAccessibleVideos(User.Identity?.Name);
 
         if (!string.IsNullOrWhiteSpace(Search))
         {

@@ -1,0 +1,33 @@
+@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<h1>Регистрация</h1>
+
+<form method="post">
+    <div>
+        <label asp-for="Username">Имя пользователя</label>
+        <input asp-for="Username" />
+    </div>
+    <div>
+        <label asp-for="Password">Пароль</label>
+        <input asp-for="Password" type="password" />
+    </div>
+    <div>
+        <label asp-for="ConfirmPassword">Повторите пароль</label>
+        <input asp-for="ConfirmPassword" type="password" />
+    </div>
+
+    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+    {
+        <div class="validation-summary-errors">
+            @Model.ErrorMessage
+        </div>
+    }
+
+    <button type="submit">Зарегистрироваться</button>
+</form>
+
+<p>Уже есть аккаунт? <a asp-page="/Login">Войти</a></p>

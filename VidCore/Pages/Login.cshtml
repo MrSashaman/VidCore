@@ -1,0 +1,29 @@
+@page
+@model LoginModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h1>Войти</h1>
+
+<form method="post">
+    <div>
+        <label asp-for="Username">Имя пользователя</label>
+        <input asp-for="Username" />
+    </div>
+    <div>
+        <label asp-for="Password">Пароль</label>
+        <input asp-for="Password" type="password" />
+    </div>
+
+    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+    {
+        <div class="validation-summary-errors">
+            @Model.ErrorMessage
+        </div>
+    }
+
+    <button type="submit">Войти</button>
+</form>
+
+<p>Нет аккаунта? <a asp-page="/Register">Зарегистрироваться</a></p>

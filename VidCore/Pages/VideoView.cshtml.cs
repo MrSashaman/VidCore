@@ -1,7 +1,7 @@
-using System.Collections.Specialized;
-using System.Security.Cryptography.Xml;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using VidCore;
 
 namespace VidCore.Pages;
 
@@ -10,19 +10,10 @@ public class VideoViewModel : PageModel
     public Video CurrentVideo { get; set; }
 
     [BindProperty]
-    public string Text { get; set; }
-
-    [BindProperty]
-    public int id {get; set; }
-
-    [BindProperty]
     public string CText { get; set; }
 
     [BindProperty]
-    public DateTime UploadDate { get; set; }
-
-    [BindProperty]
-    public string Author { get; set; }
+    public bool CommentIsPrivate { get; set; }
 
     public List<Comment> Comments { get; set; } = new();
     public IActionResult OnGet(int id)
@@ -34,7 +25,14 @@ public class VideoViewModel : PageModel
             return RedirectToPage("/Error404");
         }
 
-        Comments = CommentDatabase.GetCommentsByVideoId(id);
+        var currentUser = User.Identity?.Name;
+
+        Comments = CommentDatabase.GetCommentsByVideoId(
+            id,
+            currentUser,
+            false
+        );
+
         Database.AddView(id);
 
         return Page();
@@ -129,9 +127,15 @@ public class VideoViewModel : PageModel
     public IActionResult OnPostEdit(int id, string title, string description)
     {
         var video = Database.GetVideoById(id);
+
         if (video != null)
         {
-            Database.UpdateVideo(id, title, description);
+            Database.UpdateVideo(
+                id,
+                title,
+                description,
+                User.Identity?.Name ?? string.Empty
+            );
         }
 
         return RedirectToPage("/Index");
@@ -141,7 +145,9 @@ public class VideoViewModel : PageModel
     {
 
         var video = Database.GetVideoById(id);
-        if (video != null)
+        var currentUser = User.Identity?.Name;
+        
+    if (video == null || video.Owner != currentUser)
         { 
 
 
@@ -180,7 +186,7 @@ public class VideoViewModel : PageModel
             }
 
             CommentDatabase.DeleteCommentsByVideoId(id);
-            Database.DeleteVideo(id);
+            Database.DeleteVideo(id, currentUser);
         }
     }
 }
