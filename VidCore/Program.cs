@@ -10,6 +10,7 @@ var app = builder.Build();
 
 Database.Initialize();
 CommentDatabase.Initialize();
+MusicDatabase.Initialize();
 
 app.UseStaticFiles();
 

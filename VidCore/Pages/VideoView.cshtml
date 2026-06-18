@@ -12,6 +12,7 @@
     <span>👁 @Model.CurrentVideo.Views</span>
     <span>👍 @Model.CurrentVideo.Likes</span>
     <span>@Model.GetTimeSinceUpload()</span>
+
 </div>
 <input type="hidden" name="id" value="@Model.CurrentVideo.Id" />
 
@@ -49,6 +50,40 @@ document.addEventListener("DOMContentLoaded", function() {
     <button type="submit" asp-page-handler="Like" class="btn btn-primary">
        👍
     </button>
+
+    <button type="button" onclick="shareVideo(@Model.CurrentVideo.Id)" class="btn btn-primary">
+        💿
+    </button>
+    @Html.AntiForgeryToken()
+
+
+    @section Scripts {
+<script>
+    async function shareVideo(id) {
+        const token = document.querySelector('input[name="__RequestVerificationToken"]').value;
+
+        try {
+            const response = await fetch(`?handler=Share&id=${id}`, {
+                method: 'POST',
+                headers: {
+                    'RequestVerificationToken': token
+                }
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                await navigator.clipboard.writeText(data.textToCopy);
+                
+                alert("Ссылка скопирована в буфер обмена!");
+            } else {
+                alert("Видео не найдено или произошла ошибка.");
+            }
+        } catch (err) {
+            console.error('Ошибка выполнения запроса:', err);
+        }
+    }
+</script>
+}
 
     <div>
         <h3>Комментарий</h3>

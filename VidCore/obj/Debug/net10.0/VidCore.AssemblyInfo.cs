@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("VidCore")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a14fd20bc8905abd86802706c6b6a8c88f681e18")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b643a9d2c470775b84bcc55ea31fade2c1aed228")]
 [assembly: System.Reflection.AssemblyProductAttribute("VidCore")]
 [assembly: System.Reflection.AssemblyTitleAttribute("VidCore")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

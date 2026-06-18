@@ -1,4 +1,3 @@
-using System.Collections.Immutable;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -6,32 +5,25 @@ namespace VidCore.Pages;
 
 public class MusicPageModel : PageModel
 {
-
-    public Music CurrentMusic { get; set; }
-
     public List<Music> Musics { get; set; }
 
     public void OnGet()
     {
-        Musics = MusicStorage.Musics;
-        Console.WriteLine($"Music count: {Musics.Count}");
-
+        Musics = MusicDatabase.GetAllMusic();
     }
 
-
-
-    public IActionResult OnPostLikeMus(int id, int Likes )
+    public IActionResult OnPostLike(int id)
     {
-        CurrentMusic = MusicStorage.Musics.FirstOrDefault(v => v.Id == id);
+        MusicDatabase.AddLike(id);
+        var music = MusicDatabase.GetMusicById(id);
+        Console.WriteLine($"✓ Лайк добавлен: {music?.Title}");
+        return RedirectToPage();
+    }
 
-        if (CurrentMusic == null)
-        {
-            Console.WriteLine("Nihua");
-            return NotFound();
-        }
-
-        CurrentMusic.Likes += 1;
-
-        return Page();
+    public IActionResult OnPostDelete(int id)
+    {
+        MusicDatabase.DeleteMusic(id);
+        Console.WriteLine($"✓ Музыка с ID {id} удалена");
+        return RedirectToPage();
     }
 }

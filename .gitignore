@@ -3,5 +3,11 @@
 videos/
 thumbnails/
 VidCore/wwwroot/js/plyr.js
+musics/
 
-
+VidCore/music.db
+VidCore/wwwroot/js/plyr.js.map
+VidCore/wwwroot/css/plyr.css
+VidCore/wwwroot/css/plyr.css.map
+VidCore/wwwroot/css/plyr.min.css
+VidCore/wwwroot/css/plyr.min.css.map    

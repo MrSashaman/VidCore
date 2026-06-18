@@ -225,4 +225,4 @@ C:/Users/Alexsandr Pimonov/Desktop/VSTC_Projects/VidCore/VidCore/obj/Debug/net10
 /home/mrsashaman/VidCore/VidCore/bin/Debug/net10.0/runtimes/win-x86/native/e_sqlite3.dll
 /home/mrsashaman/VidCore/VidCore/obj/Debug/net10.0/VidCore.csproj.AssemblyReference.cache
 /home/mrsashaman/VidCore/VidCore/obj/Debug/net10.0/VidCore.csproj.Up2Date
-/home/mrsashaman/VidCore/VidCore/obj/Debug/net10.0/compressed/mvi0v19h7l-{0}-a76a4bg696-a76a4bg696.gz
+/home/mrsashaman/VidCore/VidCore/obj/Debug/net10.0/compressed/mvi0v19h7l-{0}-9fg9mnnw1w-9fg9mnnw1w.gz

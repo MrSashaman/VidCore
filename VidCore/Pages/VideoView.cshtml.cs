@@ -89,6 +89,22 @@ public class VideoViewModel : PageModel
     }
 
     
+    public IActionResult OnPostShare(int id)
+    {
+        CurrentVideo = Database.GetVideoById(id);
+        if (CurrentVideo == null)
+        {
+            return NotFound(); 
+        }
+        
+        var videoUrl = $"{Request.Scheme}://{Request.Host}/VideoView?id={id}";
+        var shareText = $"Смотрите видео: {CurrentVideo.Title} - {videoUrl}";
+        
+        return new JsonResult(new { textToCopy = shareText });
+    }
+
+
+
     public IActionResult OnPostDelete(int id, string videoPath, string thumbnailPath)
     {
         RemoveVideo(id, videoPath, thumbnailPath);

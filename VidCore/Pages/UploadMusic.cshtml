@@ -3,22 +3,63 @@
 @{
     ViewData["Title"] = "Upload Music";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>Use this page to upload music.</p>
+<div class="upload-form">
+    <h1>Загрузить музыку</h1>
 
-<form method="post" enctype="multipart/form-data">
+    @if (ViewData.ModelState.Values.Any(v => v.Errors.Any()))
+    {
+        <div style="background: #f8d7da; color: #721c24; padding: 12px; border-radius: 8px; margin-bottom: 15px;">
+            <strong>❌ Ошибка:</strong>
+            <ul>
+                @foreach (var modelState in ViewData.ModelState.Values)
+                {
+                    @foreach (var error in modelState.Errors)
+                    {
+                        <li>@error.ErrorMessage</li>
+                    }
+                }
+            </ul>
+        </div>
+    }
 
-    <label for="Title">Music Title:</label>
-    <input type="text" id="Title" name="Title" placeholder="Введите название музыки">
-    
-    <label for="Description">Описание:</label>
-    <textarea id="Description" name="Description" rows="5" cols="40" placeholder="Напишите здесь ваше описание..."></textarea>
+    <form method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="Title">Название *</label>
+            <input type="text" id="Title" name="Title" placeholder="Название песни" value="@Model.Title" required />
+        </div>
 
-    <label for="AudioFile">Загрузить аудио:</label>
-    <input type="file" id="AudioFile" name="AudioFile" accept="audio/*">
-    <button type="submit" asp-page-handler="Upload" class="btn btn-primary">
-        Загрузить видео
-    </button>
+        <div class="form-group">
+            <label for="Artist">Исполнитель</label>
+            <input type="text" id="Artist" name="Artist" placeholder="Ваше имя" value="@Model.Artist" />
+        </div>
 
-</form>
+        <div class="form-group">
+            <label for="Genre">Жанр</label>
+            <select id="Genre" name="Genre">
+                <option value="">Выберите жанр</option>
+                <option value="Rock">Rock</option>
+                <option value="Pop">Pop</option>
+                <option value="Hip-Hop">Hip-Hop</option>
+                <option value="Jazz">Jazz</option>
+                <option value="Electronic">Electronic</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="Description">Описание</label>
+            <textarea id="Description" name="Description" placeholder="Описание песни..."></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="AudioFile">Файл (MP3, WAV, OGG) *</label>
+            <input type="file" id="AudioFile" name="AudioFile" accept=".mp3,.wav,.ogg,.m4a,.flac" required />
+        </div>
+
+        <div class="upload-actions">
+            <button type="submit" class="btn">Загрузить</button>
+            <a href="/MusicPage" class="btn" style="text-align: center; text-decoration: none;">Назад</a>
+        </div>
+    </form>
+</div>

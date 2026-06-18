@@ -1,47 +1,42 @@
-﻿@page
+@page
 @model MusicPageModel
 @{
-    ViewData["Title"] = "Music Page";
+    ViewData["Title"] = "Music";
 }
 
-<div class="header">
-    <h1>VidCore</h1>
+<h1>Музыка</h1>
 
-    <p>Музыка по вашему вкусу :З!</p>
-
-</div>
-
-<hr />
-<h2 style="position:center">Music</h2>
-<div class="video-grid">
-
-    @foreach(var music in Model.Musics)
+<div class="music-grid">
+    @if (Model.Musics != null && Model.Musics.Any())
     {
-        <div class="video-card"> </div>
+        @foreach(var music in Model.Musics)
+        {
+            <div class="music-card">
+                <audio class="music-player" controls>
+                    <source src="@music.AudioPath">
+                </audio>
 
-           <video id="player" controls>
-                <source src="@music.AudioPath">
-            </video>
-                
-                <div class="video-info">
+                <div class="music-info">
+                    <div class="music-title">@music.Title</div>
+                    <div class="music-artist">@music.Artist</div>
 
-                    <div class="video-title">
-                        @music.Title
-                    </div>
-                    <div class="video-meta">
-                        @music.Description
-                        <a>♥️@music.Likes</a>
-                        <form method="post">
-                            <button type="submit" asp-page-handler="LikeMus" class="btn btn-primary">♥️</button>
+                    <div class="music-stats">
+                        <span>👍 <span class="likes-@music.Id">@music.Likes</span></span>
+                        <form method="post" style="margin: 0; padding: 0; display: inline;">
+                            <button type="submit" asp-page-handler="Like" asp-route-id="@music.Id" class="music-like-btn" title="Лайк">
+                                👍
+                            </button>
+                            <button type="submit" asp-page-handler="Delete" asp-route-id="@music.Id" class="music-delete-btn" title="Удалить">
+                                🗑️
+                            </button>
                         </form>
-
-                        
                     </div>
-                  
-
                 </div>
-
+            </div>
+        }
     }
-
+    else
+    {
+        <p>Нет музыки</p>
+    }
 </div>
-
