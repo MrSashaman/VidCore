@@ -33,7 +33,10 @@ public class VideoViewModel : PageModel
             false
         );
 
-        Database.AddView(id);
+        if (User.Identity?.IsAuthenticated == true)
+        {
+            Database.AddView(id);
+        }
 
         return Page();
     }
@@ -43,6 +46,11 @@ public class VideoViewModel : PageModel
 
     public IActionResult OnPostComment(int id)
     {
+        if (User.Identity?.IsAuthenticated != true)
+        {
+            return Challenge();
+        }
+
         if (string.IsNullOrWhiteSpace(CText))
         {
             return RedirectToPage("/VideoView", new { id });
@@ -52,7 +60,7 @@ public class VideoViewModel : PageModel
         {
             Text = CText,
             VideoId = id,
-            Author = "RandomPeople" + Random.Shared.Next(0, 999999),
+            Author = User.Identity.Name ?? "RandomPeople" + Random.Shared.Next(0, 999999),
             UploadDate = DateTime.Now
         };
 
@@ -105,6 +113,11 @@ public class VideoViewModel : PageModel
 
     public IActionResult OnPostDelete(int id, string videoPath, string thumbnailPath)
     {
+        if (User.Identity?.IsAuthenticated != true)
+        {
+            return Challenge();
+        }
+
         RemoveVideo(id, videoPath, thumbnailPath);
 
         return RedirectToPage("/Index");
@@ -112,6 +125,11 @@ public class VideoViewModel : PageModel
 
     public IActionResult OnPostLike(int id)
     {
+        if (User.Identity?.IsAuthenticated != true)
+        {
+            return Challenge();
+        }
+
         CurrentVideo = Database.GetVideoById(id);
 
         if (CurrentVideo == null)
@@ -143,50 +161,54 @@ public class VideoViewModel : PageModel
 
     private void RemoveVideo(int id, string videoPath, string thumbnailPath)
     {
-
         var video = Database.GetVideoById(id);
         var currentUser = User.Identity?.Name;
-        
-    if (video == null || video.Owner != currentUser)
-        { 
 
+        if (video == null || string.IsNullOrWhiteSpace(currentUser))
+        {
+            return;
+        }
 
-            Console.WriteLine($"VideoPath: {video.VideoPath}");
-            Console.WriteLine($"ThumbnailPath: {video.ThumbnailPath}");
+        if (video.Owner != currentUser)
+        {
+            return;
+        }
 
-            var fullVideoPath = Path.Combine(
+        Console.WriteLine($"VideoPath: {video.VideoPath}");
+        Console.WriteLine($"ThumbnailPath: {video.ThumbnailPath}");
+
+        var fullVideoPath = Path.Combine(
             Directory.GetCurrentDirectory(),
             "wwwroot",
             video.VideoPath.TrimStart('/')
         );
-            var fullThumbnailPath = Path.Combine(
+        var fullThumbnailPath = Path.Combine(
             Directory.GetCurrentDirectory(),
             "wwwroot",
             video.ThumbnailPath.TrimStart('/')
         );
 
-            if (System.IO.File.Exists(fullVideoPath))
-            {
-                System.IO.File.Delete(fullVideoPath);
-            }
-
-            bool isDefaultThumbnail =
-                video.ThumbnailPath.Contains("nullthumbail.png");
-
-            if (!isDefaultThumbnail)
-            {
-                if (System.IO.File.Exists(fullThumbnailPath))
-                {
-                    System.IO.File.Delete(fullThumbnailPath);
-                }
-            }
-            else
-            {
-                Console.WriteLine("Default thumbnail, skip delete");
-            }
-
-            CommentDatabase.DeleteCommentsByVideoId(id);
-            Database.DeleteVideo(id, currentUser);
+        if (System.IO.File.Exists(fullVideoPath))
+        {
+            System.IO.File.Delete(fullVideoPath);
         }
+
+        bool isDefaultThumbnail =
+            video.ThumbnailPath.Contains("nullthumbail.png");
+
+        if (!isDefaultThumbnail)
+        {
+            if (System.IO.File.Exists(fullThumbnailPath))
+            {
+                System.IO.File.Delete(fullThumbnailPath);
+            }
+        }
+        else
+        {
+            Console.WriteLine("Default thumbnail, skip delete");
+        }
+
+        CommentDatabase.DeleteCommentsByVideoId(id);
+        Database.DeleteVideo(id, currentUser);
     }
 }

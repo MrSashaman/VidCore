@@ -14,6 +14,11 @@ public class MusicPageModel : PageModel
 
     public IActionResult OnPostLike(int id)
     {
+        if (User.Identity?.IsAuthenticated != true)
+        {
+            return Challenge();
+        }
+
         MusicDatabase.AddLike(id);
         var music = MusicDatabase.GetMusicById(id);
         Console.WriteLine($"✓ Лайк добавлен: {music?.Title}");
