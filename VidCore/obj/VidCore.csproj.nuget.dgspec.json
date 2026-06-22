@@ -1,30 +1,32 @@
 {
   "format": 1,
   "restore": {
-    "/home/mrsashaman/VidCore/VidCore/VidCore.csproj": {}
+    "C:\\Users\\Alexsandr Pimonov\\Desktop\\VSTC_Projects\\VidCore\\VidCore\\VidCore.csproj": {}
   },
   "projects": {
-    "/home/mrsashaman/VidCore/VidCore/VidCore.csproj": {
+    "C:\\Users\\Alexsandr Pimonov\\Desktop\\VSTC_Projects\\VidCore\\VidCore\\VidCore.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/mrsashaman/VidCore/VidCore/VidCore.csproj",
+        "projectUniqueName": "C:\\Users\\Alexsandr Pimonov\\Desktop\\VSTC_Projects\\VidCore\\VidCore\\VidCore.csproj",
         "projectName": "VidCore",
-        "projectPath": "/home/mrsashaman/VidCore/VidCore/VidCore.csproj",
-        "packagesPath": "/home/mrsashaman/.nuget/packages/",
-        "outputPath": "/home/mrsashaman/VidCore/VidCore/obj/",
+        "projectPath": "C:\\Users\\Alexsandr Pimonov\\Desktop\\VSTC_Projects\\VidCore\\VidCore\\VidCore.csproj",
+        "packagesPath": "C:\\Users\\Alexsandr Pimonov\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Alexsandr Pimonov\\Desktop\\VSTC_Projects\\VidCore\\VidCore\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/mrsashaman/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\Alexsandr Pimonov\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net10.0"
         ],
         "sources": {
-          "/usr/lib/dotnet/library-packs": {},
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net10.0": {
+            "framework": "net10.0",
             "targetAlias": "net10.0",
             "projectReferences": {}
           }
@@ -39,10 +41,11 @@
           "auditLevel": "low",
           "auditMode": "all"
         },
-        "SdkAnalysisLevel": "10.0.100"
+        "SdkAnalysisLevel": "10.0.300"
       },
       "frameworks": {
         "net10.0": {
+          "framework": "net10.0",
           "targetAlias": "net10.0",
           "dependencies": {
             "Microsoft.Data.Sqlite": {
@@ -69,7 +72,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/10.0.109/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.300/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.AspNetCore": "(,10.0.32767]",
             "Microsoft.AspNetCore.Antiforgery": "(,10.0.32767]",
