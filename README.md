@@ -57,7 +57,7 @@ It provides user authentication, video and music uploading, social interactions 
 
 ### 1. Clone repository
 ```bash
-git clone https://github.com/your-username/VidCore.git
+git clone https://github.com/MrSashaman/VidCore.git
 ```
 ### 2. Navigate to project
 ```bash
