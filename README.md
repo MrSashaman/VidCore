@@ -50,9 +50,6 @@ It provides user authentication, video and music uploading, social interactions 
 
 ---
 
-
----
-
 ## 🚀 Getting Started
 
 ### 1. Clone repository
